@@ -1,0 +1,7 @@
+<apex:page standardController="MTech_Devices__c" extensions="MultipleDeviceRequestController" recordSetVar="Devices" sidebar="true">
+    <apex:form >
+	<apex:pageblock title="Selected Devices">
+
+    </apex:pageblock>
+    </apex:form>
+</apex:page>

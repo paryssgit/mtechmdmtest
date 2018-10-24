@@ -1,0 +1,36 @@
+<apex:page standardController="MTech_Devices__c" extensions="MultipleDeviceRequestController" recordSetVar="Devices" sidebar="true">
+    <apex:form >
+	<apex:pageblock title="Start Synching Process">
+    <apex:pageMessages id="MyMsg"/>
+
+    <apex:pageBlockSection title="Select Service Request#">
+        <apex:selectList id="SRNumber" multiselect="false" size="1" value="{!SelectedSRNumber}">
+           	<apex:actionSupport event="onclick" action="{!getDevices}" reRender="RelatedDevices"/>
+            <apex:selectOptions value="{!SRList}"></apex:selectOptions>
+            <apex:actionStatus id="DevStatus" startText="Fetching Devices" stopText="Done"></apex:actionStatus>
+        </apex:selectList>
+    </apex:pageBlockSection>
+    <apex:pageBlockButtons >
+    	<apex:commandButton action="{!SyncDevices}" value="Synch">
+        	<!--apex:param name="srNum" value="{!MTech_Devices__c.SR_Number2__c}" assignTo="{!srNumber}"></apex:param-->
+       	</apex:commandButton>
+        <apex:commandButton value="Cancel" action="{!cancel}"/>
+    </apex:pageBlockButtons>
+   	<apex:pageBlockSection id="RelatedDevices" title="Related Unregistered Devices">
+        <apex:pageBlockTable value="{!RelatedDevices}" var="a" id="table">
+            
+            <apex:repeat value="{!$ObjectType.MTech_Devices__c.FieldSets.SyncFields}" var="f">
+                <apex:column headerValue="{!f.Label}">
+                    <apex:outputField value="{!a[f]}"/>
+                </apex:column> 
+            </apex:repeat>
+            
+        </apex:pageBlockTable>
+    </apex:pageBlockSection>
+    <apex:outputpanel id="Status">
+        <apex:outputText title="Test" id="lblSync"></apex:outputText>
+ 	</apex:outputpanel>
+
+    </apex:pageblock>
+    </apex:form>
+</apex:page>
